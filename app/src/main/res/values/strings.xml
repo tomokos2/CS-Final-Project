@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CS Final Project</string>
+    <string name="title_activity_background">Background</string>
 </resources>
