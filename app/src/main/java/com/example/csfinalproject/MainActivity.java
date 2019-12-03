@@ -1,14 +1,11 @@
 package com.example.csfinalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private boolean isCat;
@@ -38,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    /** Changes whether the quote will be shown or not based on user selection.**/
     public void quoteOnClick(View v) {
         Button quoteToggle = (Button) v;
         if (quoteToggle.getText().toString().equals(getResources().getString(R.string.quoteOn))) {
@@ -49,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /** Changes whether an image will be shown or not based on user selection.**/
     public void imageOnClick(View v) {
         Button imageToggle = (Button) v;
         imageGroup = findViewById(R.id.imageGroup);
@@ -63,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
             isImageOn = true;
             imageGroup.setVisibility(View.VISIBLE);
         }
-
-
     }
+
+    /** Starts the background activity.**/
     public void openBackground() {
         Intent createIntent = new Intent(this, Background.class);
         if (isImageOn) {

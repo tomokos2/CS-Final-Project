@@ -1,6 +1,7 @@
 package com.example.csfinalproject;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,18 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 
 public class Background extends AppCompatActivity {
-    private Button backButton;
-    private TextView quote;
-    private ImageView image;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_background);
 
-        backButton = findViewById(R.id.backButton);
+        Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
                 openMain();
         });
@@ -34,29 +34,31 @@ public class Background extends AppCompatActivity {
         /*
         ConstraintLayout bgElement = findViewById(R.id.bg);
         bgElement.setBackgroundColor(color);
-         */
+        Set up constants for different background colors.
+        Enter variable color that will change randomly.
+        */
 
-        quote = findViewById(R.id.quote);
+        TextView quote = findViewById(R.id.quote);
         if (!isQuoteSelected) {
             quote.setVisibility(View.GONE);
         } else {
             quote.setVisibility(View.VISIBLE);
+            //Enter webApi quote things
         }
 
-        //Insert random quote generator api, returns string quote.
-        image = findViewById(R.id.image);
+        ImageView image = findViewById(R.id.image);
         if (!isImageOn) {
             image.setVisibility(View.GONE);
         } else if (!isCat) {
+            //Enter random cat api generator
             image.setImageResource(R.drawable.download);
         } else {
+            //Enter random dog api generator
             image.setImageResource(R.drawable.images);
         }
-
-        //Insert random generated image from api.
-
     }
 
+    /** Takes user back to start menu.**/
     public void openMain() {
         Intent mainIntent = new Intent(this, MainActivity.class);
         startActivity(mainIntent);
