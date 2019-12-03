@@ -37,20 +37,6 @@
         app:layout_constraintVertical_bias="0.057" />
 
     <Button
-        android:id="@+id/cat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="76dp"
-        android:layout_marginLeft="76dp"
-        android:text="Cat"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/dog"
-        app:layout_constraintHorizontal_bias="0.126"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.838" />
-
-    <Button
         android:id="@+id/quoteToggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,18 +52,6 @@
         app:layout_constraintVertical_bias="0.715" />
 
     <Button
-        android:id="@+id/dog"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="96dp"
-        android:layout_marginRight="96dp"
-        android:text="Dog"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.838" />
-
-    <Button
         android:id="@+id/isImageOn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -91,4 +65,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.715" />
+
+    <RadioGroup
+        android:id="@+id/imageGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/isImageOn">
+
+        <RadioButton
+            android:id="@+id/dogChoice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="Dog" />
+
+        <RadioButton
+            android:id="@+id/catChoice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Cat" />
+    </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,30 +7,34 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    private Button create;
-    private Button colorTheme;
-    private Button cat;
-    private Button dog;
-    private Boolean isQuoteSelected;
-    private Boolean isImageOn;
+    private boolean isCat;
+    private boolean isQuoteSelected;
+    private boolean isImageOn;
+    private RadioGroup imageGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*
-        ConstraintLayout bgElement = findViewById(R.id.bg);
-        bgElement.setBackgroundColor(color);
-         */
-        create = findViewById(R.id.create);
-        create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openBackground();
+
+        isQuoteSelected = true;
+        isCat = true;
+        isImageOn = true;
+        imageGroup = findViewById(R.id.imageGroup);
+        imageGroup.setOnCheckedChangeListener((unused, checkedId) -> {
+            if (checkedId == R.id.catChoice) {
+                isCat = true;
+            } else if (checkedId == R.id.dogChoice){
+                isCat = false;
             }
+        });
+        Button create = findViewById(R.id.create);
+        create.setOnClickListener(v -> {
+            openBackground();
         });
 
     }
@@ -44,26 +48,41 @@ public class MainActivity extends AppCompatActivity {
             isQuoteSelected = true;
         }
     }
+
     public void imageOnClick(View v) {
         Button imageToggle = (Button) v;
-        cat = findViewById(R.id.cat);
-        dog = findViewById(R.id.dog);
+        imageGroup = findViewById(R.id.imageGroup);
+
         if (imageToggle.getText().toString().equals(getResources().getString(R.string.imageOn))) {
             imageToggle.setText(getResources().getString(R.string.imageOff));
             isImageOn = false;
-
-            cat.setVisibility(View.GONE);
-            dog.setVisibility(View.GONE);
+            isCat = false;
+            imageGroup.setVisibility(View.GONE);
         } else {
             imageToggle.setText(getResources().getString(R.string.imageOn));
             isImageOn = true;
-            cat.setVisibility(View.VISIBLE);
-            dog.setVisibility(View.VISIBLE);
+            imageGroup.setVisibility(View.VISIBLE);
         }
+
+
     }
     public void openBackground() {
         Intent createIntent = new Intent(this, Background.class);
-        createIntent.putExtra("isQuoteSelected", isQuoteSelected);
+        if (isImageOn) {
+            createIntent.putExtra("isImageOn", true);
+        } else {
+            createIntent.putExtra("isImageOn", false);
+        }
+        if (isCat) {
+            createIntent.putExtra("isCat", true);
+        } else {
+            createIntent.putExtra("isCat", false);
+        }
+        if (isQuoteSelected) {
+            createIntent.putExtra("isQuoteSelected", true);
+        } else {
+            createIntent.putExtra("isQuoteSelected", false);
+        }
         startActivity(createIntent);
     }
 
