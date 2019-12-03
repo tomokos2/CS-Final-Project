@@ -1,6 +1,7 @@
 package com.example.csfinalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +15,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        /*
+        ConstraintLayout bgElement = findViewById(R.id.bg);
+        bgElement.setBackgroundColor(color);
+         */
         create = findViewById(R.id.create);
         create.setOnClickListener(new View.OnClickListener() {
             @Override

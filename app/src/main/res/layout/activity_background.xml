@@ -7,9 +7,10 @@
     tools:context=".Background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#00ECACAC">
+        android:background="#FCD6D6">
 
         <Button
             android:id="@+id/backButton"
@@ -17,5 +18,32 @@
             android:layout_height="43dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="379dp"
+            android:layout_height="399dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/quote"
+            app:layout_constraintVertical_bias="0.431"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/quote"
+            android:layout_width="204dp"
+            android:layout_height="58dp"
+            android:layout_marginTop="100dp"
+            android:text="Insert quote"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

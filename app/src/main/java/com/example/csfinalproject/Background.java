@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 
 public class Background extends AppCompatActivity {
-    Button backButton;
+    private Button backButton;
+    private TextView quote;
+    private ImageView image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +26,12 @@ public class Background extends AppCompatActivity {
                 openMain();
             }
         });
+
+        quote = findViewById(R.id.quote);
+        //Insert random quote generator api, returns string quote.
+
+        image = findViewById(R.id.image);
+        //Insert random generated image from api.
     }
 
     public void openMain() {
