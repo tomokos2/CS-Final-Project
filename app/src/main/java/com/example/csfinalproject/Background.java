@@ -13,7 +13,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 
 public class Background extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
