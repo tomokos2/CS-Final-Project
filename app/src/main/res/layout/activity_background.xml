@@ -21,8 +21,8 @@
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="379dp"
-            android:layout_height="399dp"
+            android:layout_width="321dp"
+            android:layout_height="344dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="50dp"
@@ -30,11 +30,12 @@
             android:layout_marginRight="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.486"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/quote"
-            app:layout_constraintVertical_bias="0.431"
-            tools:srcCompat="@tools:sample/avatars" />
+            app:layout_constraintVertical_bias="0.388"
+            app:srcCompat="@drawable/images"
+            tools:srcCompat="@drawable/images" />
 
         <TextView
             android:id="@+id/quote"
@@ -45,5 +46,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

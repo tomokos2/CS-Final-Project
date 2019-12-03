@@ -27,10 +27,17 @@ public class Background extends AppCompatActivity {
             }
         });
 
+        Intent mainIntent = getIntent();
+        Boolean isQuoteSelected = mainIntent.getBooleanExtra("isQuoteSelected", true);
         quote = findViewById(R.id.quote);
+        if (!isQuoteSelected) {
+            quote.setVisibility(View.GONE);
+        }
         //Insert random quote generator api, returns string quote.
-
         image = findViewById(R.id.image);
+        image.setVisibility(View.VISIBLE);
+
+        image.setImageResource(R.drawable.images);
         //Insert random generated image from api.
     }
 
