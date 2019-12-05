@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.github.lzyzsd.randomcolor.RandomColor;
+
 
 public class Background extends AppCompatActivity {
     @Override
@@ -30,12 +32,14 @@ public class Background extends AppCompatActivity {
 
         boolean isImageOn = mainIntent.getExtras().getBoolean("isImageOn", true);
 
-        /*
+
         ConstraintLayout bgElement = findViewById(R.id.bg);
-        bgElement.setBackgroundColor(color);
-        Set up constants for different background colors.
-        Enter variable color that will change randomly.
-        */
+        RandomColor randomColor = new RandomColor();
+        bgElement.setBackgroundColor(randomColor.randomColor());
+
+        // Set up constants for different background colors.
+        // Enter variable color that will change randomly.
+
 
         TextView quote = findViewById(R.id.quote);
         if (!isQuoteSelected) {
