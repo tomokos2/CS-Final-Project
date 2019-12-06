@@ -3,6 +3,7 @@ package com.example.csfinalproject;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ import java.util.Random;
 
 
 public class Background extends AppCompatActivity {
+    private String toReturn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +104,7 @@ public class Background extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             // TODO: Handle error
+                            Log.d("Error", error.getMessage());
                             error.printStackTrace();
                         }
                     });
@@ -115,32 +118,7 @@ public class Background extends AppCompatActivity {
             image.setVisibility(View.GONE);
         } else if (!isCat) {
             //Enter random dog api generator
-            String url = "https://random.dog/woof.json";
-            RequestQueue queue = Volley.newRequestQueue(this);
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                String imageUrl = response.get("url").toString();
-                                Picasso.get().load(imageUrl).into(image);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            // TODO: Handle error
-                            error.printStackTrace();
-                        }
-                    });
-
-            queue.add(jsonObjectRequest);
+            dogLoad();
 
 
             //image.setImageResource(R.drawable.download);
@@ -182,6 +160,39 @@ public class Background extends AppCompatActivity {
     public void openMain() {
         Intent mainIntent = new Intent(this, MainActivity.class);
         startActivity(mainIntent);
+    }
+
+    public void dogLoad() {
+        String url = "https://random.dog/woof.json";
+        RequestQueue queue = Volley.newRequestQueue(this);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            String imageUrl = response.get("url").toString();
+                            Log.d("url", imageUrl);
+                            if (imageUrl.endsWith(".gif") || imageUrl.endsWith(".mp4")) {
+                                dogLoad();
+                            }
+                            ImageView image = findViewById(R.id.image);
+                            Picasso.get().load(imageUrl).into(image);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        error.printStackTrace();
+                    }
+                });
+
+        queue.add(jsonObjectRequest);
+
     }
 
 
