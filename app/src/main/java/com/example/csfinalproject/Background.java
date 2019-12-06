@@ -156,7 +156,7 @@ public class Background extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             try {
                                 String raw = response.get("file").toString();
-                                String imageUrl = raw.replace("\"", "");
+                                String imageUrl = raw.replace("\\", "");
                                 Picasso.get().load(imageUrl).into(image);
 
                             } catch (JSONException e) {
