@@ -44,8 +44,8 @@
 
         <TextView
             android:id="@+id/quote"
-            android:layout_width="204dp"
-            android:layout_height="58dp"
+            android:layout_width="320dp"
+            android:layout_height="71dp"
             android:layout_marginTop="100dp"
             android:text="Insert quote"
             app:layout_constraintEnd_toEndOf="parent"

@@ -82,7 +82,6 @@ public class Background extends AppCompatActivity {
             String url = "https://api.adviceslip.com/advice";
             RequestQueue queue = Volley.newRequestQueue(this);
 
-
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -91,12 +90,11 @@ public class Background extends AppCompatActivity {
                             try {
                                 JSONObject object = response.getJSONObject("slip");
                                 String advice = object.get("advice").toString();
+                                System.out.println(advice);
                                 quote.setText(advice);
                             } catch (JSONException e) {
-                                System.out.println(e);
+                                e.printStackTrace();
                             }
-
-
                         }
                     }, new Response.ErrorListener() {
 
@@ -104,12 +102,10 @@ public class Background extends AppCompatActivity {
                         public void onErrorResponse(VolleyError error) {
                             // TODO: Handle error
                             error.printStackTrace();
-
                         }
                     });
 
             queue.add(jsonObjectRequest);
-            queue.start();
 
         }
 
@@ -117,10 +113,37 @@ public class Background extends AppCompatActivity {
         if (!isImageOn) {
             image.setVisibility(View.GONE);
         } else if (!isCat) {
-            //Enter random cat api generator
+            //Enter random dog api generator
+            String url = "https://dog.ceo/api/breeds/image/random";
+            RequestQueue queue = Volley.newRequestQueue(this);
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                String message = response.get("message").toString();
+                                //How to set image using message above such as https:\/\/images.dog.ceo\/breeds\/coonhound\/n02089078_4508.jpg?
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // TODO: Handle error
+                            error.printStackTrace();
+                        }
+                    });
+
+            queue.add(jsonObjectRequest);
+
+
             image.setImageResource(R.drawable.download);
         } else {
-            //Enter random dog api generator
+            //Enter random cat api generator
             image.setImageResource(R.drawable.images);
         }
     }
