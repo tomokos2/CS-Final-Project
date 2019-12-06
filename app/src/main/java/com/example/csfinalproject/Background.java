@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -114,7 +115,7 @@ public class Background extends AppCompatActivity {
             image.setVisibility(View.GONE);
         } else if (!isCat) {
             //Enter random dog api generator
-            String url = "https://dog.ceo/api/breeds/image/random";
+            String url = "https://random.dog/woof.json";
             RequestQueue queue = Volley.newRequestQueue(this);
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -123,8 +124,9 @@ public class Background extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                String message = response.get("message").toString();
-                                //How to set image using message above such as https:\/\/images.dog.ceo\/breeds\/coonhound\/n02089078_4508.jpg?
+                                String imageUrl = response.get("url").toString();
+                                Picasso.get().load(imageUrl).into(image);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -141,10 +143,38 @@ public class Background extends AppCompatActivity {
             queue.add(jsonObjectRequest);
 
 
-            image.setImageResource(R.drawable.download);
+            //image.setImageResource(R.drawable.download);
         } else {
             //Enter random cat api generator
-            image.setImageResource(R.drawable.images);
+            String url = "https://aws.random.cat/meow";
+            RequestQueue queue = Volley.newRequestQueue(this);
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                String raw = response.get("file").toString();
+                                String imageUrl = raw.replace("\"", "");
+                                Picasso.get().load(imageUrl).into(image);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // TODO: Handle error
+                            error.printStackTrace();
+                        }
+                    });
+
+            queue.add(jsonObjectRequest);
+
+            //image.setImageResource(R.drawable.images);
         }
     }
 
