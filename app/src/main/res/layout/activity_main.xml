@@ -12,10 +12,10 @@
         android:layout_width="253dp"
         android:layout_height="148dp"
         android:layout_marginTop="308dp"
-        android:layout_marginBottom="308dp"
+        android:layout_marginBottom="32dp"
         android:background="#F5C9C5"
         android:text="Create Background"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/quoteToggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView"
@@ -23,22 +23,24 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="332dp"
-        android:layout_height="210dp"
+        android:layout_width="365dp"
+        android:layout_height="246dp"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
+        android:gravity="center"
         android:lineSpacingExtra="10sp"
         android:text="Click &quot;Create Button&quot; to generate a random background screen. Then, if you like it, just take a screenshot and set it as your new background. If you don't like it, click anywhere on the screen to return home and generate a new background."
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textSize="16sp"
-        app:fontFamily="casual"
+        app:fontFamily="@font/fira_mono_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.057" />
+        app:layout_constraintVertical_bias="0.053" />
 
     <Button
         android:id="@+id/quoteToggle"

@@ -29,12 +29,12 @@
 
         <TextView
             android:id="@+id/quote"
-            android:layout_width="341dp"
-            android:layout_height="288dp"
+            android:layout_width="349dp"
+            android:layout_height="346dp"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="Insert quote"
-            android:textSize="40sp"
+            android:textSize="36sp"
             app:fontFamily="@font/fira_mono_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
