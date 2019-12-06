@@ -11,7 +11,17 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.github.lzyzsd.randomcolor.RandomColor;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Random;
 
 
 public class Background extends AppCompatActivity {
@@ -34,11 +44,33 @@ public class Background extends AppCompatActivity {
 
 
         ConstraintLayout bgElement = findViewById(R.id.bg);
-        RandomColor randomColor = new RandomColor();
-        bgElement.setBackgroundColor(randomColor.randomColor());
+        //RandomColor randomColor = new RandomColor();
+
 
         // Set up constants for different background colors.
         // Enter variable color that will change randomly.
+        String[] colors = new String[] {
+                "#E0BBE4", "#957DAD", "#D291BC", "#FEC8D8", "#FFDFD3",
+                "#EFB0C9", "#F4C2D7", "#F8DAE9", "#B9D6F3", "#A1C9F1", "#F1E8D9",
+                "#B29DD9", "#FDFD98", "#FE6B64", "#77DD77", "#779ECB",
+                //Pretty Pastel Color
+                "#FDCFB3", "#CEC8E4", "#F9F7E8",
+                //Pastel Pales Color
+                "#FFDDDD", "#FFFFCF", "#D9FFDF", "#D9FFFF",
+                //Pastel Backyard Color
+                "#F7EF64", "#F3FAF1", "#E2EEC2", "#B4D7A2",
+                //Pastel Forest Color
+                "#B7C68B", "#F4F0CB", "#DED29E", "#B3A580", "#A29574",
+                "#BED7D1", "#F7EBC3", "#FBD6C6", "#F8E1E7", "#F8D1E0",
+                "#FF756D", "#FFF49C", "#F9FFCB", "#85DE77", "#FF9AA2", "#FFB7B2",
+                "#FFDAC1", "#E2F0CB", "#B5EAD7", "#C7CEEA", "#769ECB", "#9DBAD5",
+                "#FAF3DD", "#C8D6B9", "#8FC1A9", "#7CAA98", "#D99294", "#F5B7B7",
+                "#F6CACB", "#D2E9DA", "#AFDAC1"
+        };
+        int rnd = new Random().nextInt(colors.length);
+        bgElement.setBackgroundColor(Color.parseColor(colors[rnd]));
+
+
 
 
         TextView quote = findViewById(R.id.quote);
@@ -47,6 +79,38 @@ public class Background extends AppCompatActivity {
         } else {
             quote.setVisibility(View.VISIBLE);
             //Enter webApi quote things
+            String url = "https://api.adviceslip.com/advice";
+            RequestQueue queue = Volley.newRequestQueue(this);
+
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                JSONObject object = response.getJSONObject("slip");
+                                String advice = object.get("advice").toString();
+                                quote.setText(advice);
+                            } catch (JSONException e) {
+                                System.out.println(e);
+                            }
+
+
+                        }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // TODO: Handle error
+                            error.printStackTrace();
+
+                        }
+                    });
+
+            queue.add(jsonObjectRequest);
+            queue.start();
+
         }
 
         ImageView image = findViewById(R.id.image);
