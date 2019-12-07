@@ -1,16 +1,18 @@
 package com.example.csfinalproject;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 public class MainActivity extends AppCompatActivity {
     private boolean isCat;
+    private boolean isDog;
     private boolean isQuoteSelected;
     private boolean isImageOn;
     private RadioGroup imageGroup;
@@ -21,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         isQuoteSelected = true;
-
-
         isImageOn = true;
         imageGroup = findViewById(R.id.imageGroup);
 
@@ -31,24 +31,43 @@ public class MainActivity extends AppCompatActivity {
             boolean thisCat = intent.getExtras().getBoolean("isCat", true);
             if (thisCat) {
                 isCat = true;
+                isDog = false;
                 imageGroup.check(R.id.catChoice);
             } else {
                 isCat = false;
+                isDog = true;
                 imageGroup.check(R.id.dogChoice);
             }
         } catch (NullPointerException e) {
+            e.printStackTrace();
         }
 
         imageGroup.setOnCheckedChangeListener((unused, checkedId) -> {
             if (checkedId == R.id.catChoice) {
                 isCat = true;
+                isDog = false;
             } else if (checkedId == R.id.dogChoice){
                 isCat = false;
+                isDog = true;
             }
         });
+
         Button create = findViewById(R.id.create);
         create.setOnClickListener(v -> {
-            openBackground();
+            if (isCat || isDog) {
+                openBackground();
+            } else {
+                //show an alert if neither cat or dog is chosen
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Please choose Dog or Cat first!")
+                        .setTitle("Cannot create background");
+                builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                    }
+                });
+                builder.create().show();
+            }
         });
 
     }
@@ -74,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             imageToggle.setText(getResources().getString(R.string.imageOff));
             isImageOn = false;
             isCat = false;
+            isDog = false;
             imageGroup.setVisibility(View.GONE);
         } else {
             imageToggle.setText(getResources().getString(R.string.imageOn));
@@ -92,8 +112,10 @@ public class MainActivity extends AppCompatActivity {
         }
         if (isCat) {
             createIntent.putExtra("isCat", true);
+            createIntent.putExtra("isDog", false);
         } else {
             createIntent.putExtra("isCat", false);
+            createIntent.putExtra("isDog", true);
         }
         if (isQuoteSelected) {
             createIntent.putExtra("isQuoteSelected", true);

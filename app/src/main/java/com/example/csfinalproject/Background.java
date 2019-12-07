@@ -27,7 +27,7 @@ import java.util.Random;
 
 
 public class Background extends AppCompatActivity {
-    private String toReturn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

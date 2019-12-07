@@ -34,7 +34,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="Insert quote"
-            android:textSize="36sp"
+            android:textSize="24sp"
             app:fontFamily="@font/fira_mono_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
