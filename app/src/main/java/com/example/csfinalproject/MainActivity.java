@@ -3,8 +3,10 @@ package com.example.csfinalproject;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,9 +21,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         isQuoteSelected = true;
-        isCat = true;
+
+
         isImageOn = true;
         imageGroup = findViewById(R.id.imageGroup);
+
+        try {
+            Intent intent = getIntent();
+            boolean thisCat = intent.getExtras().getBoolean("isCat", true);
+            if (thisCat) {
+                isCat = true;
+                imageGroup.check(R.id.catChoice);
+            } else {
+                isCat = false;
+                imageGroup.check(R.id.dogChoice);
+            }
+        } catch (NullPointerException e) {
+        }
+
         imageGroup.setOnCheckedChangeListener((unused, checkedId) -> {
             if (checkedId == R.id.catChoice) {
                 isCat = true;

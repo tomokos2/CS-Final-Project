@@ -90,14 +90,12 @@
             android:id="@+id/dogChoice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="false"
             android:text="Dog" />
 
         <RadioButton
             android:id="@+id/catChoice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="true"
             android:text="Cat" />
     </RadioGroup>
 </androidx.constraintlayout.widget.ConstraintLayout>

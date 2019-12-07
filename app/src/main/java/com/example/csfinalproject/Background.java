@@ -158,7 +158,14 @@ public class Background extends AppCompatActivity {
 
     /** Takes user back to start menu.**/
     public void openMain() {
+        Intent intent = getIntent();
+        boolean isCat = intent.getExtras().getBoolean("isCat", true);
         Intent mainIntent = new Intent(this, MainActivity.class);
+        if (isCat) {
+            mainIntent.putExtra("isCat", true);
+        } else {
+            mainIntent.putExtra("isCat", false);
+        }
         startActivity(mainIntent);
     }
 
