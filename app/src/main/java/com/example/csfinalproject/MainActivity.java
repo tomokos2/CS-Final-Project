@@ -26,9 +26,13 @@ public class MainActivity extends AppCompatActivity {
         isImageOn = true;
         imageGroup = findViewById(R.id.imageGroup);
 
+        Button quoteToggle = findViewById(R.id.quoteToggle);
+        Button imageButton = findViewById(R.id.isImageOn);
         try {
             Intent intent = getIntent();
             boolean thisCat = intent.getExtras().getBoolean("isCat", true);
+            boolean thisImage = intent.getExtras().getBoolean("isImage", true);
+            boolean thisQuote = intent.getExtras().getBoolean("isQuote", true);
             if (thisCat) {
                 isCat = true;
                 isDog = false;
@@ -37,6 +41,22 @@ public class MainActivity extends AppCompatActivity {
                 isCat = false;
                 isDog = true;
                 imageGroup.check(R.id.dogChoice);
+            }
+            if (thisImage) {
+                isImageOn = true;
+                imageButton.setText(getResources().getString(R.string.imageOn));
+                imageGroup.setVisibility(View.VISIBLE);
+            } else {
+                isImageOn = false;
+                imageButton.setText(getResources().getString(R.string.imageOff));
+                imageGroup.setVisibility(View.GONE);
+            }
+            if (thisQuote) {
+                isQuoteSelected = true;
+                quoteToggle.setText(getResources().getString(R.string.quoteOn));
+            } else {
+                isQuoteSelected = false;
+                quoteToggle.setText(getResources().getString(R.string.quoteOff));
             }
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -54,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button create = findViewById(R.id.create);
         create.setOnClickListener(v -> {
-            if (isCat || isDog) {
+            if ((isCat || isDog) || !isImageOn) {
                 openBackground();
             } else {
                 //show an alert if neither cat or dog is chosen

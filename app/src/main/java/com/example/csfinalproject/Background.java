@@ -1,14 +1,21 @@
 package com.example.csfinalproject;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -23,15 +30,19 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Date;
 import java.util.Random;
 
 
 public class Background extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_background);
+
+
 
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> {
@@ -75,12 +86,20 @@ public class Background extends AppCompatActivity {
 
 
 
-
+        TextView centerQuote = findViewById(R.id.imageOff);
         TextView quote = findViewById(R.id.quote);
         if (!isQuoteSelected) {
             quote.setVisibility(View.GONE);
+            centerQuote.setVisibility(View.GONE);
         } else {
-            quote.setVisibility(View.VISIBLE);
+            if (!isImageOn) {
+                centerQuote.setVisibility(View.VISIBLE);
+                quote.setVisibility(View.GONE);
+            } else {
+                quote.setVisibility(View.VISIBLE);
+                centerQuote.setVisibility(View.GONE);
+            }
+
             //Enter webApi quote things
             String url = "https://api.adviceslip.com/advice";
             RequestQueue queue = Volley.newRequestQueue(this);
@@ -95,6 +114,7 @@ public class Background extends AppCompatActivity {
                                 String advice = object.get("advice").toString();
                                 System.out.println(advice);
                                 quote.setText(advice);
+                                centerQuote.setText(advice);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -112,12 +132,20 @@ public class Background extends AppCompatActivity {
             queue.add(jsonObjectRequest);
 
         }
-
+        ImageView centerImage = findViewById(R.id.centerPic);
         ImageView image = findViewById(R.id.image);
         if (!isImageOn) {
             image.setVisibility(View.GONE);
+            centerImage.setVisibility(View.GONE);
         } else if (!isCat) {
             //Enter random dog api generator
+            if (!isQuoteSelected) {
+                image.setVisibility(View.GONE);
+                centerImage.setVisibility(View.VISIBLE);
+            } else {
+                image.setVisibility(View.VISIBLE);
+                centerImage.setVisibility(View.GONE);
+            }
             dogLoad();
 
 
@@ -126,6 +154,14 @@ public class Background extends AppCompatActivity {
             //Enter random cat api generator
             String url = "https://aws.random.cat/meow";
             RequestQueue queue = Volley.newRequestQueue(this);
+
+            if (!isQuoteSelected) {
+                image.setVisibility(View.GONE);
+                centerImage.setVisibility(View.VISIBLE);
+            } else {
+                image.setVisibility(View.VISIBLE);
+                centerImage.setVisibility(View.GONE);
+            }
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -136,6 +172,7 @@ public class Background extends AppCompatActivity {
                                 String raw = response.get("file").toString();
                                 String imageUrl = raw.replace("\\", "");
                                 Picasso.get().load(imageUrl).into(image);
+                                Picasso.get().load(imageUrl).into(centerImage);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -153,18 +190,35 @@ public class Background extends AppCompatActivity {
             queue.add(jsonObjectRequest);
 
             //image.setImageResource(R.drawable.images);
+
+
         }
     }
 
     /** Takes user back to start menu.**/
     public void openMain() {
         Intent intent = getIntent();
+        boolean isQuoteSelected = intent.getExtras().getBoolean("isQuoteSelected", true);
+
         boolean isCat = intent.getExtras().getBoolean("isCat", true);
+
+        boolean isImageOn = intent.getExtras().getBoolean("isImageOn", true);
+
         Intent mainIntent = new Intent(this, MainActivity.class);
         if (isCat) {
             mainIntent.putExtra("isCat", true);
         } else {
             mainIntent.putExtra("isCat", false);
+        }
+        if (isQuoteSelected) {
+            mainIntent.putExtra("isQuote", true);
+        } else {
+            mainIntent.putExtra("isQuote", false);
+        }
+        if (isImageOn) {
+            mainIntent.putExtra("isImage", true);
+        } else {
+            mainIntent.putExtra("isImage", false);
         }
         startActivity(mainIntent);
     }
@@ -184,6 +238,8 @@ public class Background extends AppCompatActivity {
                                 dogLoad();
                             }
                             ImageView image = findViewById(R.id.image);
+                            ImageView centerImage = findViewById(R.id.centerPic);
+                            Picasso.get().load(imageUrl).into(centerImage);
                             Picasso.get().load(imageUrl).into(image);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -201,6 +257,5 @@ public class Background extends AppCompatActivity {
         queue.add(jsonObjectRequest);
 
     }
-
 
 }
