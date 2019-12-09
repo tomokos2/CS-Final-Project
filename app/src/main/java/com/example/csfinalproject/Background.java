@@ -144,7 +144,7 @@ public class Background extends AppCompatActivity {
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            // TODO: Handle error
+
                             error.printStackTrace();
                         }
                     });
@@ -212,7 +212,6 @@ public class Background extends AppCompatActivity {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
                         error.printStackTrace();
                     }
                 });
@@ -250,7 +249,6 @@ public class Background extends AppCompatActivity {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
                         Log.d("Error", error.getMessage());
                         error.printStackTrace();
                     }
