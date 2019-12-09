@@ -1,23 +1,14 @@
 package com.example.csfinalproject;
 
-import android.Manifest;
+
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -31,21 +22,15 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.Date;
 import java.util.Random;
 
 
 public class Background extends AppCompatActivity {
-    ProgressBar spinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_background);
 
-        spinner = findViewById(R.id.progressBar1);
 
 
         Button backButton = findViewById(R.id.backButton);
@@ -60,11 +45,6 @@ public class Background extends AppCompatActivity {
 
         boolean isImageOn = mainIntent.getExtras().getBoolean("isImageOn", true);
 
-        if (!isCat && isImageOn) {
-            spinner.setVisibility(View.VISIBLE);
-        } else {
-            spinner.setVisibility(View.GONE);
-        }
         ConstraintLayout bgElement = findViewById(R.id.bg);
         //RandomColor randomColor = new RandomColor();
 
@@ -109,35 +89,8 @@ public class Background extends AppCompatActivity {
             }
 
             //Enter webApi quote things
-            String url = "https://api.adviceslip.com/advice";
-            RequestQueue queue = Volley.newRequestQueue(this);
+            quoteLoad();
 
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                JSONObject object = response.getJSONObject("slip");
-                                String advice = object.get("advice").toString();
-                                System.out.println(advice);
-                                quote.setText(advice);
-                                centerQuote.setText(advice);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            // TODO: Handle error
-                            Log.d("Error", error.getMessage());
-                            error.printStackTrace();
-                        }
-                    });
-
-            queue.add(jsonObjectRequest);
 
         }
         ImageView centerImage = findViewById(R.id.centerPic);
@@ -155,6 +108,7 @@ public class Background extends AppCompatActivity {
                 centerImage.setVisibility(View.GONE);
             }
             dogLoad();
+            spinner.setVisibility(View.GONE);
 
 
             //image.setImageResource(R.drawable.download);
@@ -232,8 +186,7 @@ public class Background extends AppCompatActivity {
     }
 
     public void dogLoad() {
-        spinner = findViewById(R.id.progressBar1);
-        spinner.setVisibility(View.VISIBLE);
+
         String url = "https://random.dog/woof.json";
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -244,8 +197,7 @@ public class Background extends AppCompatActivity {
                         try {
                             String imageUrl = response.get("url").toString();
                             Log.d("url", imageUrl);
-                            if (imageUrl.endsWith(".gif") || imageUrl.endsWith(".mp4")) {
-                                spinner.setVisibility(View.VISIBLE);
+                            if (imageUrl.endsWith(".gif") || imageUrl.endsWith(".mp4") || imageUrl.endsWith(".webm")) {
                                 dogLoad();
                             }
                             ImageView image = findViewById(R.id.image);
@@ -264,10 +216,47 @@ public class Background extends AppCompatActivity {
                         error.printStackTrace();
                     }
                 });
-        spinner.setVisibility(View.GONE);
+        //spinner.setVisibility(View.GONE);
         queue.add(jsonObjectRequest);
 
 
+    }
+
+    public void quoteLoad() {
+        String url = "https://api.adviceslip.com/advice";
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject object = response.getJSONObject("slip");
+                            String advice = object.get("advice").toString();
+                            if (advice.length() > 90) {
+                                quoteLoad();
+                            }
+                            System.out.println(advice);
+                            TextView quote = findViewById(R.id.quote);
+                            TextView centerQuote = findViewById(R.id.imageOff);
+                            quote.setText(advice);
+                            centerQuote.setText(advice);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.d("Error", error.getMessage());
+                        error.printStackTrace();
+                    }
+                });
+
+        queue.add(jsonObjectRequest);
     }
 
 }
