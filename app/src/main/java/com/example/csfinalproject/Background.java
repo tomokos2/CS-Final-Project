@@ -108,7 +108,6 @@ public class Background extends AppCompatActivity {
                 centerImage.setVisibility(View.GONE);
             }
             dogLoad();
-            spinner.setVisibility(View.GONE);
 
 
             //image.setImageResource(R.drawable.download);
